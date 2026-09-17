@@ -1,0 +1,16 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:v1="http://ec.europa.eu/tracesnt/waste/annex7/v1" xmlns:v11="http://ec.europa.eu/tracesnt/waste/model/v1" xmlns:v4="http://ec.europa.eu/sanco/tracesnt/base/v4">
+  <soapenv:Header>
+    <v4:WebServiceClientId>wsr-system</v4:WebServiceClientId>
+  </soapenv:Header>
+  <soapenv:Body>
+    <v1:CreateAnnex7DocumentTypeRequest>
+      <v1:takeBackIndication>false</v1:takeBackIndication>
+      <v1:illegalActivityIndication>false
+      <v1:transportAnnouncement>
+        <v11:arranger>
+          <v11:PartyUUID>4cec6977-c459-4a3d-a6bf-1551bb97597c</v11:PartyUUID>
+        </v11:arranger>
+      </v1:transportAnnouncement>
+    </v1:CreateAnnex7DocumentTypeRequest>
+  </soapenv:Body>
+</soapenv:Envelope>

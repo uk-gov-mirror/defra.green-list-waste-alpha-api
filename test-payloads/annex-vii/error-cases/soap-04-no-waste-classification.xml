@@ -1,0 +1,86 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:v1="http://ec.europa.eu/tracesnt/waste/annex7/v1" xmlns:v11="http://ec.europa.eu/tracesnt/waste/model/v1" xmlns:v4="http://ec.europa.eu/sanco/tracesnt/base/v4">
+  <soapenv:Header>
+    <v4:WebServiceClientId>wsr-system</v4:WebServiceClientId>
+  </soapenv:Header>
+  <soapenv:Body>
+    <v1:CreateAnnex7DocumentTypeRequest>
+      <v1:takeBackIndication>false</v1:takeBackIndication>
+      <v1:illegalActivityIndication>false</v1:illegalActivityIndication>
+      <v1:shipmentArrangerIsAlsoProducerOrCollector>true</v1:shipmentArrangerIsAlsoProducerOrCollector>
+      <v1:transportAnnouncement>
+         <v11:arranger>
+            <v11:PartyUUID>4cec6977-c459-4a3d-a6bf-1551bb97597c</v11:PartyUUID>
+            <v11:Contact>
+               <v11:Name>Jane Smith</v11:Name>
+               <v11:TelephoneCompleteNumber>+441234567890</v11:TelephoneCompleteNumber>
+               <v11:EmailURI>jane.smith@greenlistexports.co.uk</v11:EmailURI>
+            </v11:Contact>
+            <v11:OperatorInternalID>200001</v11:OperatorInternalID>
+         </v11:arranger>
+         <v11:consignee>
+            <v11:PartyUUID>1e090ecf-0c36-41cb-b024-ec96524fb71e</v11:PartyUUID>
+            <v11:Contact>
+               <v11:Name>Lars Nielsen</v11:Name>
+               <v11:TelephoneCompleteNumber>+4512345678</v11:TelephoneCompleteNumber>
+               <v11:EmailURI>ops@nordicrecycling.dk</v11:EmailURI>
+            </v11:Contact>
+            <v11:OperatorInternalID>200002</v11:OperatorInternalID>
+         </v11:consignee>
+         <v11:actualQuantity><v11:MassMeasure><v11:tonnes>18.5</v11:tonnes></v11:MassMeasure></v11:actualQuantity>
+         <v11:actualDateOfShipment>2026-09-25</v11:actualDateOfShipment>
+         <v11:shipmentOriginLocation>
+            <v11:AddressDetails>12 Harbour Road, Southampton, SO14 3XB, GB</v11:AddressDetails>
+         </v11:shipmentOriginLocation>
+         <v11:shipmentLocationResponsiblePerson>
+            <v11:Name>Jane Smith</v11:Name>
+            <v11:TelephoneCompleteNumber>+441234567890</v11:TelephoneCompleteNumber>
+            <v11:EmailURI>jane.smith@greenlistexports.co.uk</v11:EmailURI>
+         </v11:shipmentLocationResponsiblePerson>
+         <v11:carrier>
+            <v11:PartyUUID>9d6ddda4-e522-4634-828f-f8a0eb8d6a13</v11:PartyUUID>
+            <v11:Contact>
+               <v11:Name>Priya Patel</v11:Name>
+               <v11:TelephoneCompleteNumber>+441234000111</v11:TelephoneCompleteNumber>
+               <v11:EmailURI>ops@channelfreight.co.uk</v11:EmailURI>
+            </v11:Contact>
+            <v11:OperatorInternalID>200003</v11:OperatorInternalID>
+            <v11:MeansOfTransportCode>R</v11:MeansOfTransportCode>
+         </v11:carrier>
+         
+         <v11:recoveryLaboratoryFacility>
+            <v11:PartyUUID>cd6c55fe-55d0-4583-8e7f-1ae93b32aeb8</v11:PartyUUID>
+            <v11:Contact>
+               <v11:Name>Michael Braun</v11:Name>
+               <v11:TelephoneCompleteNumber>+4930123456</v11:TelephoneCompleteNumber>
+               <v11:EmailURI>intake@rheinrecovery.de</v11:EmailURI>
+            </v11:Contact>
+            <v11:OperatorInternalID>200006</v11:OperatorInternalID>
+            <v11:operationalIndicators>
+               <v11:InterimFacility>false</v11:InterimFacility>
+               <v11:NextSubsequentInterimOrNonInterimFacilityInAnotherCountry>false</v11:NextSubsequentInterimOrNonInterimFacilityInAnotherCountry>
+               <v11:NextSubsequentInterimOrNonInterimFacilityInSameCountry>false</v11:NextSubsequentInterimOrNonInterimFacilityInSameCountry>
+            </v11:operationalIndicators>
+            <v11:wasteFacilityNameConfidential>false</v11:wasteFacilityNameConfidential>
+            <v11:facilityLaboratoryTypeCode>R</v11:facilityLaboratoryTypeCode>
+         </v11:recoveryLaboratoryFacility>
+         <v11:recoveryDisposalTypeCode>R4</v11:recoveryDisposalTypeCode>
+         <v11:usualDescriptionOfTheWaste>
+            <v11:Description languageID="en">Shredded aluminium can scrap, baled</v11:Description>
+         </v11:usualDescriptionOfTheWaste>
+         
+         <v11:commodityCode>7602</v11:commodityCode>
+         <v11:exportCountry><v11:countryID>826</v11:countryID></v11:exportCountry>
+         <v11:importCountry><v11:countryID>276</v11:countryID></v11:importCountry>
+      </v1:transportAnnouncement>
+      <v1:declarationArranger>
+         <v11:PartyUUID>4cec6977-c459-4a3d-a6bf-1551bb97597c</v11:PartyUUID>
+         <v11:Signature>
+            <v11:name>Jane Smith</v11:name>
+            <v11:organizationRole>Export Compliance Manager</v11:organizationRole>
+            <v11:timestamp>2026-09-24T09:15:00.000Z</v11:timestamp>
+         </v11:Signature>
+      </v1:declarationArranger>
+      
+    </v1:CreateAnnex7DocumentTypeRequest>
+  </soapenv:Body>
+</soapenv:Envelope>

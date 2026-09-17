@@ -24,7 +24,13 @@ const validPayload = {
     actualDateOfShipment: '2024-06-01',
     createdDueToTakeBack: false,
     createdDueToIllegalActivity: false,
-    commodityCodes: ['4707 10 00']
+    commodityCodes: ['4707 10 00'],
+    shipmentOriginLocation: { addressDetails: '1 Mill Lane, Leeds, LS1 1AA' },
+    shipmentLocationResponsiblePerson: {
+      name: 'John Doe',
+      phone: '+1234567890',
+      email: 'john.doe@somecompany.co.uk'
+    }
   },
   carriers: [
     {

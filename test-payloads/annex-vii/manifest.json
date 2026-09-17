@@ -1,0 +1,215 @@
+{
+  "happyPath": [
+    {
+      "id": "hp-01",
+      "file": "happy-path/01-standard-single-carrier.json",
+      "target": "annexvii",
+      "description": "Baseline scenario: arranger is also the waste producer, single road carrier, mass-only quantity, EC list of wastes classification, no transit countries.",
+      "expected": { "httpStatus": 201, "diwassStatus": "OK" }
+    },
+    {
+      "id": "hp-02",
+      "file": "happy-path/02-multi-carrier-multi-leg.json",
+      "target": "annexvii",
+      "description": "Two-leg journey (road then barge) with two carriers, mass and volume both supplied, one transit country.",
+      "expected": { "httpStatus": 201, "diwassStatus": "OK" }
+    },
+    {
+      "id": "hp-03",
+      "file": "happy-path/03-separate-waste-producer.json",
+      "target": "annexvii",
+      "description": "Arranger is NOT the waste producer: wasteProducer and its declaration are populated, classified under Basel Annex IX.",
+      "expected": { "httpStatus": 201, "diwassStatus": "OK" }
+    },
+    {
+      "id": "hp-04",
+      "file": "happy-path/04-volume-only-quantity.json",
+      "target": "annexvii",
+      "description": "Volume-only quantity (metersCubed), no tonnes.",
+      "expected": { "httpStatus": 201, "diwassStatus": "OK" }
+    },
+    {
+      "id": "hp-05",
+      "file": "happy-path/05-basel-annex-ix-classification.json",
+      "target": "annexvii",
+      "description": "Waste classified solely under Basel Annex IX (List B) rather than the EC list of wastes.",
+      "expected": { "httpStatus": 201, "diwassStatus": "OK" }
+    },
+    {
+      "id": "hp-06",
+      "file": "happy-path/06-oecd-green-list-classification.json",
+      "target": "annexvii",
+      "description": "Waste classified under the OECD green list (a code not already covered by Basel Annex IX).",
+      "expected": { "httpStatus": 201, "diwassStatus": "OK" }
+    },
+    {
+      "id": "hp-07",
+      "file": "happy-path/07-confidential-interim-facility-with-transit.json",
+      "target": "annexvii",
+      "description": "Interim, name-confidential recovery facility with a confidentiality explanation, plus a transit country.",
+      "expected": { "httpStatus": 201, "diwassStatus": "OK" }
+    }
+  ],
+  "errorCases": [
+    {
+      "id": "err-json-01",
+      "file": "error-cases/json-01-missing-required-field.json",
+      "target": "annexvii",
+      "type": "json",
+      "description": "shipment.actualDateOfShipment omitted entirely.",
+      "expected": {
+        "httpStatus": 400,
+        "note": "Joi schema validation error - actualDateOfShipment is required"
+      }
+    },
+    {
+      "id": "err-json-02",
+      "file": "error-cases/json-02-invalid-waste-code.json",
+      "target": "annexvii",
+      "type": "json",
+      "description": "ecListOfWastes set to \"99 99 99\", not a real EWC code.",
+      "expected": {
+        "httpStatus": 400,
+        "note": "findInvalidWasteCodes rejects an unrecognised EWC code before the record is persisted"
+      }
+    },
+    {
+      "id": "err-json-03",
+      "file": "error-cases/json-03-no-carriers.json",
+      "target": "annexvii",
+      "type": "json",
+      "description": "carriers is an empty array.",
+      "expected": {
+        "httpStatus": 400,
+        "note": "Joi schema requires carriers to have at least one entry (.min(1))"
+      }
+    },
+    {
+      "id": "err-json-04",
+      "file": "error-cases/json-04-invalid-email-format.json",
+      "target": "annexvii",
+      "type": "json",
+      "description": "importerConsignee.contactDetails.email is not a valid email address.",
+      "expected": {
+        "httpStatus": 400,
+        "note": "Joi schema requires contactDetails.email to pass .email()"
+      }
+    },
+    {
+      "id": "err-json-05",
+      "file": "error-cases/json-05-neither-mass-nor-volume.json",
+      "target": "annexvii",
+      "type": "json",
+      "description": "actualQuantity.tonnes and actualQuantity.metersCubed are both null - valid per the alpha's own JSON schema (quantitySchema has no .or() constraint), but DIWASS's own contract requires exactly one of mass or volume.",
+      "expected": {
+        "httpStatus": 201,
+        "diwassStatus": "ERROR",
+        "note": "Local write succeeds (Joi schema doesn't enforce mass-or-volume), but the downstream DIWASS/emulator submission is rejected once actualQuantity reaches the SOAP layer with neither MassMeasure nor VolumeMeasure - see ASSUMPTIONS.md item A1"
+      },
+      "assumption": "A1"
+    },
+    {
+      "id": "err-json-06",
+      "file": "error-cases/json-06-duplicate-document-number.json",
+      "target": "annexvii",
+      "type": "json",
+      "description": "Reuses annexVIIDocumentNo \"AX-2026-HP-01\" - run this AFTER hp-01 has already been submitted once.",
+      "expected": {
+        "httpStatus": 409,
+        "note": "Mongo duplicate key (E11000) on annexVIIDocumentNo maps to Boom.conflict"
+      }
+    },
+    {
+      "id": "err-soap-01",
+      "file": "error-cases/soap-01-malformed-xml.xml",
+      "target": "diwass-annex-vii-raw",
+      "type": "soap",
+      "description": "Structurally malformed XML - an unclosed <v1:illegalActivityIndication> element breaks the document tree.",
+      "expected": {
+        "httpStatus": 400,
+        "note": "CONFIRMED by this pack's own validation run: the emulator's parser (fast-xml-parser, called via parser.parse(rawXml) with no validation flag - see src/diwass-emulator/xml/parse.js) does NOT check XML well-formedness. It silently recovers from the unclosed tag, mis-nests the rest of the document, and the request fails later on an unrelated business rule (missing actualQuantity) rather than being rejected as malformed at the door. The resulting 400 is correct by coincidence, not because the malformed structure was detected. See ASSUMPTIONS.md item A5"
+      },
+      "assumption": "A5"
+    },
+    {
+      "id": "err-soap-02",
+      "file": "error-cases/soap-02-missing-mass-and-volume.xml",
+      "target": "diwass-annex-vii-raw",
+      "type": "soap",
+      "description": "Otherwise-valid request with an empty actualQuantity element (no MassMeasure or VolumeMeasure).",
+      "expected": {
+        "httpStatus": 400,
+        "note": "Annex7ValidationError: actualQuantity must carry a MassMeasure or a VolumeMeasure"
+      }
+    },
+    {
+      "id": "err-soap-03",
+      "file": "error-cases/soap-03-no-carrier-element.xml",
+      "target": "diwass-annex-vii-raw",
+      "type": "soap",
+      "description": "No <carrier> element present at all.",
+      "expected": {
+        "httpStatus": 400,
+        "note": "Annex7ValidationError: At least one carrier is required"
+      }
+    },
+    {
+      "id": "err-soap-04",
+      "file": "error-cases/soap-04-no-waste-classification.xml",
+      "target": "diwass-annex-vii-raw",
+      "type": "soap",
+      "description": "No <wasteClassification> element present at all.",
+      "expected": {
+        "httpStatus": 400,
+        "note": "Annex7ValidationError: At least one wasteClassification code is required"
+      }
+    },
+    {
+      "id": "err-soap-05",
+      "file": "error-cases/soap-05-alpha2-country-code-instead-of-numeric.xml",
+      "target": "diwass-annex-vii-raw",
+      "type": "soap",
+      "description": "exportCountry.countryID sent as the ISO alpha-2 code \"GB\" instead of the UN M49 numeric code the spec pack's own samples use (e.g. 826).",
+      "expected": {
+        "httpStatus": 200,
+        "note": "The emulator does not validate country code format at all, so this is accepted - but the data contracts page documents that Annex VII country fields use UN M49 numeric codes, not alpha-2. Real DIWASS's actual behaviour here is unconfirmed and worth testing first. See ASSUMPTIONS.md item A2"
+      },
+      "assumption": "A2"
+    },
+    {
+      "id": "err-soap-06",
+      "file": "error-cases/soap-06-duplicate-operator-registration.xml",
+      "target": "diwass-operators-raw",
+      "type": "soap",
+      "description": "CreateOperatorRequest reusing the EORI (GB123456789000) already registered for the seeded \"arranger\" operator.",
+      "expected": {
+        "httpStatus": 409,
+        "note": "DuplicateOperatorError - matches DIWASS's documented 'cannot be two or more operators with the same VAT/EORI number' rule"
+      }
+    },
+    {
+      "id": "err-soap-07",
+      "file": "error-cases/soap-07-unresolved-operator-id.xml",
+      "target": "diwass-annex-vii-raw",
+      "type": "soap",
+      "description": "consignee.OperatorInternalID set to 999999 - never registered via CreateOperatorRequest.",
+      "expected": {
+        "httpStatus": 200,
+        "note": "The emulator does not cross-reference party OperatorInternalIDs against its own operator store (documented gap - CLAUDE.md 'No cross-referencing between operators and Annex VII documents yet'), so this succeeds. Real DIWASS's actual behaviour for an unresolved or non-Valid OperatorInternalID is unconfirmed. See ASSUMPTIONS.md item A3"
+      },
+      "assumption": "A3"
+    },
+    {
+      "id": "err-soap-08",
+      "file": "error-cases/soap-08-missing-producer-block.xml",
+      "target": "diwass-annex-vii-raw",
+      "type": "soap",
+      "description": "shipmentArrangerIsAlsoProducerOrCollector is false, but no wasteProducer or declarationProducer block is supplied.",
+      "expected": {
+        "httpStatus": 200,
+        "note": "The emulator does not enforce the conditional-mandatory rule (wasteProducer/declarationProducer required unless the arranger is also the producer), so this succeeds. Real DIWASS's own parameter mapping documents this as a 'Yes, unless...' rule, so this is a likely-real rejection the emulator currently can't rehearse. See ASSUMPTIONS.md item A4"
+      },
+      "assumption": "A4"
+    }
+  ]
+}

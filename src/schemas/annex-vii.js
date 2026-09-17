@@ -142,7 +142,30 @@ export const annexViiSchema = Joi.object({
     relatedToNotificationNo: Joi.string().allow(null),
     relatedToMovementDocumentNo: Joi.string().allow(null),
     relatedToAnnexVIIDocumentNo: Joi.string().allow(null),
-    commodityCodes: Joi.array().items(Joi.string())
+    commodityCodes: Joi.array().items(Joi.string()),
+
+    /*
+    [Shipment Origin Location]
+    Where the shipment actually starts - DIWASS's own parameter mapping
+    marks this mandatory on every Annex VII, as either a known party
+    (partyUuid) or a free-text address, independent of who the waste
+    producer is. Previously only captured (optionally) under
+    wasteProducer.shipmentStartLocation, which meant it was silently
+    dropped whenever the arranger was also the producer - see
+    green-list-waste-alpha-api test-payloads/annex-vii/ASSUMPTIONS.md A6.
+    */
+    shipmentOriginLocation: Joi.object({
+      partyUuid: Joi.string().guid(),
+      addressDetails: Joi.string()
+    })
+      .or('partyUuid', 'addressDetails')
+      .required(),
+
+    shipmentLocationResponsiblePerson: Joi.object({
+      name: Joi.string().required(),
+      phone: Joi.string().required(),
+      email: Joi.string().email().required()
+    }).required()
   }).required(),
 
   carriers: Joi.array()

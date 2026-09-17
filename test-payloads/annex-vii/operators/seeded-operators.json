@@ -1,0 +1,58 @@
+{
+  "arranger": {
+    "operatorInternalId": "200001",
+    "uuid": "975b716f-d2a8-42f0-bac0-d9ee5f6233ac",
+    "name": "Green List Exports Ltd",
+    "identifierType": "eori",
+    "identifierValue": "GB123456789000",
+    "activityStatus": "Valid"
+  },
+  "consignee": {
+    "operatorInternalId": "200002",
+    "uuid": "63530ffc-f7b9-42b8-9cb4-7704e4b4eb0b",
+    "name": "Nordic Recycling A/S",
+    "identifierType": "vat",
+    "identifierValue": "DK98765432",
+    "activityStatus": "Valid"
+  },
+  "carrierRoad": {
+    "operatorInternalId": "200003",
+    "uuid": "265b3d03-d979-48f5-a36b-66bfeeef83db",
+    "name": "Channel Freight Ltd",
+    "identifierType": "eori",
+    "identifierValue": "GB111222333000",
+    "activityStatus": "Valid"
+  },
+  "carrierWater": {
+    "operatorInternalId": "200004",
+    "uuid": "32c8e894-07e6-4f28-9532-80130a6b44e1",
+    "name": "Rhine Barge Logistics BV",
+    "identifierType": "vat",
+    "identifierValue": "NL822334455B01",
+    "activityStatus": "Valid"
+  },
+  "wasteProducer": {
+    "operatorInternalId": "200005",
+    "uuid": "ff9fcf71-7b6c-4740-8d8f-8a3a164088d7",
+    "name": "Midlands Metal Recovery Ltd",
+    "identifierType": "eori",
+    "identifierValue": "GB444555666000",
+    "activityStatus": "Valid"
+  },
+  "recoveryFacility": {
+    "operatorInternalId": "200006",
+    "uuid": "1de69f02-ac3b-44be-8980-ef864582f5af",
+    "name": "Rhein Recovery GmbH",
+    "identifierType": "vat",
+    "identifierValue": "DE123456789",
+    "activityStatus": "Valid"
+  },
+  "recoveryFacilityConfidential": {
+    "operatorInternalId": "200007",
+    "uuid": "eac1ba1e-97fd-41d8-86bd-a3a355a3cc66",
+    "name": "Iberia Reciclatge SL",
+    "identifierType": "vat",
+    "identifierValue": "ESB12345678",
+    "activityStatus": "Valid"
+  }
+}

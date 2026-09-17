@@ -1,0 +1,95 @@
+{
+  "annexVIIDocumentNo": "AX-2026-HP-04",
+  "shipmentArranger": {
+    "operatorId": "200001",
+    "uuid": "4cec6977-c459-4a3d-a6bf-1551bb97597c",
+    "contactDetails": {
+      "contactPerson": "Jane Smith",
+      "phone": "+441234567890",
+      "email": "jane.smith@greenlistexports.co.uk"
+    },
+    "isAlsoWasteProducer": true
+  },
+  "importerConsignee": {
+    "operatorId": "200002",
+    "uuid": "1e090ecf-0c36-41cb-b024-ec96524fb71e",
+    "contactDetails": {
+      "contactPerson": "Lars Nielsen",
+      "phone": "+4512345678",
+      "email": "ops@nordicrecycling.dk"
+    }
+  },
+  "shipment": {
+    "actualQuantity": {
+      "tonnes": null,
+      "metersCubed": 28
+    },
+    "actualDateOfShipment": "2026-10-03",
+    "createdDueToTakeBack": false,
+    "createdDueToIllegalActivity": false,
+    "commodityCodes": ["3915 20 00"],
+    "shipmentOriginLocation": {
+      "addressDetails": "12 Harbour Road, Southampton, SO14 3XB, GB"
+    },
+    "shipmentLocationResponsiblePerson": {
+      "name": "Jane Smith",
+      "phone": "+441234567890",
+      "email": "jane.smith@greenlistexports.co.uk"
+    }
+  },
+  "carriers": [
+    {
+      "operatorId": "200003",
+      "uuid": "9d6ddda4-e522-4634-828f-f8a0eb8d6a13",
+      "contactDetails": {
+        "contactPerson": "Priya Patel",
+        "phone": "+441234000111",
+        "email": "ops@channelfreight.co.uk"
+      },
+      "meansOfTransportCode": "R",
+      "transferDate": "2026-10-03",
+      "declaration": {
+        "authenticatedBy": {
+          "name": "Priya Patel",
+          "email": "ops@channelfreight.co.uk",
+          "roleInOrganisation": "Logistics Manager",
+          "authenticationTimestamp": "2026-10-02T08:00:00Z",
+          "uuid": "e6e6d1a4-9a1d-4c9e-8a4a-7f2b6a2b0031"
+        }
+      }
+    }
+  ],
+  "recoveryFacility": {
+    "operatorId": "200006",
+    "uuid": "cd6c55fe-55d0-4583-8e7f-1ae93b32aeb8",
+    "facilityType": "recoveryFacility",
+    "isInterimFacility": false,
+    "contactDetails": {
+      "contactPerson": "Michael Braun",
+      "phone": "+4930123456",
+      "email": "intake@rheinrecovery.de"
+    },
+    "nameIsConfidential": false
+  },
+  "recoveryOperation": {
+    "rCodeDCode": "R3"
+  },
+  "usualDescriptionOfWaste": "Baled low-density polyethylene film, volume-measured load",
+  "wasteIdentification": {
+    "ecListOfWastes": "19 12 04"
+  },
+  "countriesStatesConcerned": {
+    "exportDispatchCountry": "GB",
+    "importDestinationCountry": "DE",
+    "transitCountries": []
+  },
+  "declarationOfShipmentArranger": {
+    "authenticatedBy": {
+      "name": "Jane Smith",
+      "email": "jane.smith@greenlistexports.co.uk",
+      "roleInOrganisation": "Export Compliance Manager",
+      "authenticationTimestamp": "2026-10-02T09:15:00Z",
+      "uuid": "e6e6d1a4-9a1d-4c9e-8a4a-7f2b6a2b0032"
+    }
+  }
+}

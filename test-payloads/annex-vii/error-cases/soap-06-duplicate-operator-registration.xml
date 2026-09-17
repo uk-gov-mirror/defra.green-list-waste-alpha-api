@@ -1,0 +1,48 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:v4="http://ec.europa.eu/sanco/tracesnt/base/v4" xmlns:v2="http://ec.europa.eu/tracesnt/directory/operator/v2" xmlns:v1="http://ec.europa.eu/tracesnt/directory/operator/base/v1">
+  <soapenv:Header>
+    <v4:LanguageCode>en</v4:LanguageCode>
+    <v4:WebServiceClientId>wsr-system</v4:WebServiceClientId>
+  </soapenv:Header>
+  <soapenv:Body>
+    <v2:CreateOperatorRequest>
+      <v2:Operator>
+        <v1:Name>Green List Exports Ltd (duplicate registration attempt)</v1:Name>
+        <v1:OperatorAddress main="true">
+          <v1:Address>
+            <v1:Street>12 Harbour Road</v1:Street>
+            <v1:City>
+              <v1:Name>Southampton</v1:Name>
+              <v1:PostalCode>SO14 3XB</v1:PostalCode>
+              <v1:CountryID>GB</v1:CountryID>
+            </v1:City>
+          </v1:Address>
+        </v1:OperatorAddress>
+        <v1:OperatorContactDetail>
+          <v1:ContactDetail type="phone">+441234567890</v1:ContactDetail>
+        </v1:OperatorContactDetail>
+        <v1:OperatorContactDetail>
+          <v1:ContactDetail type="contact_person_name">Jane Smith</v1:ContactDetail>
+        </v1:OperatorContactDetail>
+        <v1:OperatorContactDetail>
+          <v1:ContactDetail type="email">jane.smith@greenlistexports.co.uk</v1:ContactDetail>
+        </v1:OperatorContactDetail>
+        <!--
+          Same EORI as the already-registered "arranger" operator in
+          operators/seed-operators.json (GB123456789000). DIWASS's own spec
+          is explicit that there "cannot be two or more operators with the
+          same VAT number or same EORI number" - see the "Duplicate
+          identifier" error entry on the alpha site's data contracts page.
+        -->
+        <v1:Identifier type="eori" name="EORI" main="true">GB123456789000</v1:Identifier>
+        <v1:Activity>
+          <v1:ActivityType>
+            <v1:Chapter name="Waste Shipment Regulation">wsr</v1:Chapter>
+            <v1:Section name="Waste Shipment Regulation">WSR</v1:Section>
+            <v1:Type name="WSR Operator">waste_operator</v1:Type>
+          </v1:ActivityType>
+          <v1:ResponsibleAuthorityActivityCode>DE002</v1:ResponsibleAuthorityActivityCode>
+        </v1:Activity>
+      </v2:Operator>
+    </v2:CreateOperatorRequest>
+  </soapenv:Body>
+</soapenv:Envelope>

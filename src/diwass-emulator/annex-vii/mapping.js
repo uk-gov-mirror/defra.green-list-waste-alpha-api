@@ -72,6 +72,27 @@ function wasteClassificationXml(wasteIdentification) {
     .join('')
 }
 
+function shipmentOriginLocationXml(location) {
+  const body = location.partyUuid
+    ? `<v11:PartyUUID>${escapeXml(location.partyUuid)}</v11:PartyUUID>`
+    : `<v11:AddressDetails>${escapeXml(location.addressDetails)}</v11:AddressDetails>`
+  return `<v11:shipmentOriginLocation>${body}</v11:shipmentOriginLocation>`
+}
+
+function shipmentLocationResponsiblePersonXml(person) {
+  return `<v11:shipmentLocationResponsiblePerson>
+    <v11:Name>${escapeXml(person.name)}</v11:Name>
+    <v11:TelephoneCompleteNumber>${escapeXml(person.phone)}</v11:TelephoneCompleteNumber>
+    <v11:EmailURI>${escapeXml(person.email)}</v11:EmailURI>
+  </v11:shipmentLocationResponsiblePerson>`
+}
+
+function commodityCodeXml(commodityCodes) {
+  return (commodityCodes ?? [])
+    .map((code) => `<v11:commodityCode>${escapeXml(code)}</v11:commodityCode>`)
+    .join('')
+}
+
 export function buildCreateAnnex7RequestBody(payload) {
   const {
     shipment,
@@ -136,6 +157,8 @@ export function buildCreateAnnex7RequestBody(payload) {
       ${quantityXml(shipment.actualQuantity)}
       <v11:actualDateOfShipment>${new Date(shipment.actualDateOfShipment).toISOString().slice(0, 10)}</v11:actualDateOfShipment>
       ${shipment.containerIdentificationNo ? `<v11:containerIdentification>${escapeXml(shipment.containerIdentificationNo)}</v11:containerIdentification>` : ''}
+      ${shipmentOriginLocationXml(shipment.shipmentOriginLocation)}
+      ${shipmentLocationResponsiblePersonXml(shipment.shipmentLocationResponsiblePerson)}
       ${carrierXml}
       ${producerXml}
       ${facilityXml}
@@ -144,6 +167,7 @@ export function buildCreateAnnex7RequestBody(payload) {
         <v11:Description languageID="en">${escapeXml(usualDescriptionOfWaste)}</v11:Description>
       </v11:usualDescriptionOfTheWaste>
       <v11:wasteClassification>${wasteClassificationXml(wasteIdentification)}</v11:wasteClassification>
+      ${commodityCodeXml(shipment.commodityCodes)}
       <v11:exportCountry><v11:countryID>${escapeXml(countriesStatesConcerned.exportDispatchCountry)}</v11:countryID></v11:exportCountry>
       <v11:importCountry><v11:countryID>${escapeXml(countriesStatesConcerned.importDestinationCountry)}</v11:countryID></v11:importCountry>
       ${transitCountryXml}
